@@ -20,3 +20,15 @@ class Storage:
 
         except FileNotFoundError:
             return []    
+
+    @classmethod
+    def export_history(cls,messages, filename="conversation.txt"):
+        with open(filename, "w", encoding="utf-8") as file:
+
+            for message in messages:
+
+                role = message["role"].capitalize()
+
+                content = message["content"]
+
+                file.write(f"{role}: {content}\n\n")    

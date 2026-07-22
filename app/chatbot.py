@@ -43,6 +43,7 @@ from app.history import ConversationHistory
 from app.logger import logger
 from app.ai_service import AIService
 from app.storage import Storage
+from app.commands import CommandHandler
 
 class Chatbot:
     def __init__(self):
@@ -98,6 +99,9 @@ class Chatbot:
     def chat(self):
         while True:
             user_input = self.get_user_input()
+
+            if CommandHandler.is_command(user_input):
+                print(f"'{user_input}' is a command.")
 
             if user_input.lower() == "exit":
                 print("👋 Goodbye!")

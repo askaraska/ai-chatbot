@@ -8,6 +8,9 @@
 # print(response.output_text)
 
 from app.chatbot import Chatbot
+from app.settings import validate_settings
+
+validate_settings()
 
 bot = Chatbot()
 bot.chat()
