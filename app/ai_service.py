@@ -15,6 +15,8 @@ class AIService:
 
         last_message = messages[-1]["content"]
 
+        start_time = time.time()
+        
         try:
             response = client.responses.create(
                 model=MODEL_NAME,
@@ -27,10 +29,15 @@ class AIService:
 
             answer = f"You said -> {last_message}"
 
+        response_time = round(time.time() - start_time,2)
+
         response = {
             "answer": answer,
-            "status": "success"
+            "status": "success",
+            "model": MODEL_NAME,
+            "response_time": response_time
         }
+        
         json_response = json.dumps(response, indent=4)
 
         for word in json_response.split(): #Becomes: ["You", "said", "->", "hello"]

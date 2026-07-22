@@ -96,52 +96,86 @@ class Chatbot:
         # Temporary for learning
         # print(self.history.get_messages())
 
+    def show_history(self):
+        print("\nConversation History:\n")
+
+        for message in self.history.get_messages():
+            print(f"{message['role'].title()}: {message['content']}")
+
+        print()
+
+    def clear_history(self):
+        self.history.clear()
+        print("🧹 Conversation history cleared.\n")
+
+    def show_stats(self):
+        stats = self.history.get_stats()
+
+        print("\n📊 Conversation Statistics\n")
+        print(f"Total Messages     : {stats['total']}")
+        print(f"System Messages    : {stats['system']}")
+        print(f"User Messages      : {stats['user']}")
+        print(f"Assistant Messages : {stats['assistant']}")
+        print()
+
     def chat(self):
         while True:
             user_input = self.get_user_input()
 
+            # if CommandHandler.is_command(user_input):
+            #     print(f"'{user_input}' is a command.")
+
             if CommandHandler.is_command(user_input):
-                print(f"'{user_input}' is a command.")
 
-            if user_input.lower() == "exit":
-                print("👋 Goodbye!")
-                break
+                should_continue = CommandHandler.execute(
+                    user_input,
+                    self
+                )
+
+                if not should_continue:
+                    break
+
+                continue
+
+            # if user_input.lower() == "exit":
+            #     print("👋 Goodbye!")
+            #     break
             
-            if user_input.lower() == "help":
-                print("\nAvailable Commands:")
-                print("help    - Show available commands")
-                print("history - Show conversation history")
-                print("clear   - Clear conversation history")
-                print("exit    - Exit chatbot\n")
-                continue
+            # if user_input.lower() == "help":
+            #     print("\nAvailable Commands:")
+            #     print("help    - Show available commands")
+            #     print("history - Show conversation history")
+            #     print("clear   - Clear conversation history")
+            #     print("exit    - Exit chatbot\n")
+            #     continue
 
-            if user_input.lower() == "history":
+            # if user_input.lower() == "history":
 
-                print("\nConversation History:\n")
+            #     print("\nConversation History:\n")
 
-                for message in self.history.get_messages():
-                    print(f"{message['role'].title()}: {message['content']}")
+            #     for message in self.history.get_messages():
+            #         print(f"{message['role'].title()}: {message['content']}")
 
-                print()
+            #     print()
 
-                continue
+            #     continue
 
-            if user_input.lower() == "clear":
-                self.history.clear()
-                print("🧹 Conversation history cleared.\n")
-                continue
+            # if user_input.lower() == "clear":
+            #     self.history.clear()
+            #     print("🧹 Conversation history cleared.\n")
+            #     continue
 
-            if user_input.lower() == "stats":
-                stats = self.history.get_stats()
+            # if user_input.lower() == "stats":
+            #     stats = self.history.get_stats()
 
-                print("\n📊 Conversation Statistics\n")
-                print(f"Total Messages     : {stats['total']}")
-                print(f"System Messages    : {stats['system']}")
-                print(f"User Messages      : {stats['user']}")
-                print(f"Assistant Messages : {stats['assistant']}")
-                print()
+            #     print("\n📊 Conversation Statistics\n")
+            #     print(f"Total Messages     : {stats['total']}")
+            #     print(f"System Messages    : {stats['system']}")
+            #     print(f"User Messages      : {stats['user']}")
+            #     print(f"Assistant Messages : {stats['assistant']}")
+            #     print()
 
-                continue
+            #     continue
 
             try:
                 self.process_message(user_input) #Processes the complete conversation.
