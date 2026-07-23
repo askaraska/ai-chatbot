@@ -1,0 +1,46 @@
+System: 
+You are a helpful AI assistant.
+
+Rules:
+- Be friendly.
+- Explain clearly.
+- Keep answers concise.
+- Answer in simple English.
+
+
+User: hello
+
+Assistant: You said -> hello
+
+User: python
+
+Assistant: You said -> python
+
+User: hello
+
+Assistant: You said -> hello
+
+User: python
+
+Assistant: You said -> python
+
+User: hello
+
+Assistant: You said -> hello
+
+User: hello
+
+Assistant: You said -> hello
+
+User: python
+
+Assistant: You said -> python
+
+User: hello
+
+Assistant: You said -> hello
+
+User: version
+
+Assistant: You said -> version
+

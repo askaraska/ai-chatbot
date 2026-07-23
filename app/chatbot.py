@@ -49,22 +49,28 @@ class Chatbot:
     def __init__(self):
         print("🤖 Chatbot initialized!")
 
-        print("=" * 50)
-        print("Welcome to AI Chatbot Internship Project")
-        print("Type 'help' to see available commands.")
-        print("=" * 50)
-
         logger.info("Chatbot started") #chatbot.log
-
-        self.history = ConversationHistory() #Creates a ConversationHistory object.
         
+        self.history = ConversationHistory() #Creates a ConversationHistory object.
+                
         saved_messages = Storage.load_history()
-
+        
         if saved_messages:
             self.history.load_messages(saved_messages)
             print("📂 Previous conversation loaded.")
-
+        
         self.ai_service = AIService()
+
+        print("=" * 60)
+        print("🤖 AI CHATBOT INTERNSHIP PROJECT")
+        print("=" * 60)
+        print(f"Model   : {self.ai_service.__class__.__name__}")
+        print("Version : 1.0.0")
+        print("Commands: help | history | stats | clear | version | exit")
+        print("=" * 60)
+        print("Type 'help' to see all available commands.\n")
+
+        
 
     def get_user_input(self):
         return input("You: ")
@@ -104,6 +110,13 @@ class Chatbot:
 
         print()
 
+    def export_history(self):
+        Storage.export_history(
+            self.history.get_messages()
+        )
+
+        print("✅ Conversation exported successfully.\n")
+
     def clear_history(self):
         self.history.clear()
         print("🧹 Conversation history cleared.\n")
@@ -136,6 +149,21 @@ class Chatbot:
                     break
 
                 continue
+
+            command_words = CommandHandler.get_commands()
+
+            if (
+                user_input.isalpha()
+                and user_input.lower() not in command_words
+                and len(user_input) <= 10
+            ):
+                if any(
+                    user_input.lower().startswith(cmd[:2])
+                    for cmd in command_words
+                ):
+                    print(f"⚠️ Unknown command: {user_input}")
+                    print("Type 'help' to see available commands.\n")
+                    continue   
 
             # if user_input.lower() == "exit":
             #     print("👋 Goodbye!")
